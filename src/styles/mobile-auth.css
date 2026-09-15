@@ -1,0 +1,225 @@
+/* Mobile only: the desktop composition and existing shared controls stay intact. */
+@media (max-width: 760px) {
+  html:has(.mobile-auth-experience),
+  body:has(.mobile-auth-experience) {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  .signup-page:has(.mobile-auth-experience) {
+    min-height: 100dvh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  .mobile-auth-experience {
+    min-height: 100dvh;
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: max(22px, env(safe-area-inset-top)) 16px
+      max(16px, env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+  .mobile-brand {
+    align-self: stretch;
+    flex: 0 0 auto;
+    padding: 0 8px;
+    min-height: 46px;
+  }
+  .mobile-brand .brand {
+    font-size: 24px;
+  }
+  .skip-intro {
+    position: absolute;
+    top: max(24px, env(safe-area-inset-top));
+    right: 70px;
+    min-width: 44px;
+    min-height: 36px;
+    padding: 6px;
+    border: 0;
+    border-radius: 7px;
+    color: var(--cg-text-muted);
+    background: transparent;
+    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .mobile-intro {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 35px;
+  }
+  .mobile-intro h1 {
+    flex: 0 0 auto;
+    font-size: clamp(30px, 9.2vw, 42px);
+    line-height: 1.08;
+    letter-spacing: -1.7px;
+    text-align: center;
+  }
+  .mobile-intro .journey {
+    width: 100%;
+    max-height: 52dvh;
+    margin: 24px 0 0;
+    overflow: hidden;
+  }
+  .mobile-intro .film-strip,
+  .mobile-intro .cut-line,
+  .mobile-intro .scissors {
+    display: block;
+  }
+  /* The final SVG path ends at 3.55s; hold 150ms, then exit for 250ms. */
+  .mobile-intro.is-exiting {
+    animation: mobile-intro-exit 250ms 150ms ease-in both;
+  }
+  .auth-panel {
+    flex: 0 1 auto;
+    min-height: 0;
+    width: min(100%, 420px);
+    margin: auto 0;
+    padding: 25px 22px 22px;
+    border: 1px solid var(--cg-border);
+    border-radius: 22px;
+    background: var(--cg-surface);
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    animation: mobile-auth-enter 280ms ease-out both;
+    scroll-padding: 20px;
+  }
+  .auth-panel-heading h1 {
+    font-size: clamp(29px, 8.3vw, 36px);
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+  }
+  .auth-panel-heading p {
+    color: var(--cg-text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--cg-border);
+    margin-top: 20px;
+    gap: 16px;
+  }
+  .auth-tabs button {
+    min-height: 43px;
+    padding: 8px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--cg-text-muted);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .auth-tabs button[aria-selected="true"] {
+    border-bottom-color: var(--cg-primary);
+    color: var(--cg-text);
+  }
+  .auth-panel form {
+    margin-top: 22px;
+  }
+  .auth-panel .account-type legend {
+    font-size: 11px;
+  }
+  .auth-panel .segments span {
+    min-height: 43px;
+    font-size: 16px;
+  }
+  .auth-panel .google-button {
+    padding-inline: 42px 12px;
+    margin-top: 19px;
+    min-height: 49px;
+    font-size: 15px;
+  }
+  .auth-panel form > .google-button:first-child {
+    margin-top: 0;
+  }
+  .auth-panel .google-logo {
+    width: 25px;
+    height: 25px;
+    left: 13px;
+  }
+  .auth-panel .divider {
+    margin: 17px 0;
+    font-size: 12px;
+  }
+  .auth-panel .field label {
+    font-size: 13px;
+  }
+  .auth-panel .input-wrap {
+    height: 49px;
+    padding-left: 12px;
+    gap: 10px;
+  }
+  .auth-panel .input-wrap > svg {
+    width: 21px;
+  }
+  .auth-panel .password-field {
+    margin-top: 18px;
+  }
+  .auth-panel .primary-button {
+    min-height: 49px;
+    margin-top: 25px;
+    font-size: 16px;
+  }
+  .auth-panel .sign-in {
+    margin-top: 18px;
+    font-size: 12px;
+  }
+  .auth-panel .legal {
+    margin-top: 20px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .auth-panel .forgot-password {
+    text-align: right;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--cg-primary);
+  }
+  .auth-panel .success-state {
+    margin-top: 0;
+    padding: 25px 0 0;
+  }
+  .auth-panel .success-state h2 {
+    font-size: 29px;
+  }
+  .auth-panel .success-state p {
+    font-size: 14px;
+  }
+  @keyframes mobile-intro-exit {
+    to {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+  @keyframes mobile-auth-enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .mobile-intro,
+  .auth-panel {
+    animation: none;
+    transform: none;
+  }
+}

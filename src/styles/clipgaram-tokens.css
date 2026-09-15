@@ -1,0 +1,84 @@
+/* ClipGaram design tokens — auth foundation */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Brand primitives */
+  --cg-forest: #203a35;
+  --cg-clay: #d7653d;
+  --cg-paper: #f4f0e8;
+  --cg-sage: #8fae9f;
+
+  /* Semantic colors */
+  --cg-background: #f4f0e8;
+  --cg-surface: #fbf8f1;
+  --cg-surface-raised: #ffffff;
+  --cg-text: #203a35;
+  --cg-text-muted: #5f6d68;
+  --cg-text-inverse: #f4f0e8;
+  --cg-primary: #203a35;
+  --cg-primary-hover: #172f2a;
+  --cg-accent: #d7653d;
+  --cg-border: #d5d9d3;
+  --cg-border-strong: #203a35;
+  --cg-focus: #d7653d;
+  --cg-success: #2f765f;
+  --cg-error: #b64e42;
+
+  /* Illustration */
+  --cg-art-line: #203a35;
+  --cg-art-dark: #203a35;
+  --cg-art-mid: #8fae9f;
+  --cg-art-pale: #d8e2d9;
+  --cg-art-accent: #d7653d;
+
+  /* Typography */
+  --cg-font-display: "Fraunces", Georgia, serif;
+  --cg-font-ui:
+    "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --cg-background: #122621;
+  --cg-surface: #1b352e;
+  --cg-surface-raised: #203a35;
+  --cg-text: #f4f0e8;
+  --cg-text-muted: #b8c4be;
+  --cg-text-inverse: #122621;
+  --cg-primary: #ef8a67;
+  --cg-primary-hover: #f3a487;
+  --cg-accent: #ef8a67;
+  --cg-border: #3c554f;
+  --cg-border-strong: #769087;
+  --cg-focus: #f3a487;
+  --cg-success: #7cc49b;
+  --cg-error: #ff8c82;
+
+  --cg-art-line: #f4f0e8;
+  --cg-art-dark: #203a35;
+  --cg-art-mid: #8fae9f;
+  --cg-art-pale: #d8e2d9;
+  --cg-art-accent: #ef8a67;
+}
+
+body {
+  background: var(--cg-background);
+  color: var(--cg-text);
+  font-family: var(--cg-font-ui);
+}
+
+h1,
+h2,
+h3,
+.display-type {
+  font-family: var(--cg-font-display);
+}
+
+:focus-visible {
+  outline: 3px solid var(--cg-focus);
+  outline-offset: 3px;
+}
