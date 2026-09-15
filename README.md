@@ -5,7 +5,7 @@
 <h1 align="center">ClipGaram</h1>
 
 <p align="center">
-  A creator × clipper marketplace built for Nepal 🇳🇵
+  <strong>A creator × clipper marketplace built for Nepal 🇳🇵</strong>
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/React-TypeScript-3178C6?logo=react&logoColor=white" alt="React TypeScript">
   <img src="https://img.shields.io/badge/Vite-Powered-646CFF?logo=vite&logoColor=white" alt="Vite">
   <img src="https://img.shields.io/badge/Status-In%20Development-orange" alt="Status">
-  <img src="https://img.shields.io/github/license/BlackInOne69/ClipGaram" alt="License">
+  <img src="https://img.shields.io/badge/License-Proprietary-red" alt="Proprietary License">
 </p>
 
 ---
@@ -25,7 +25,7 @@
 
 **ClipGaram** is a platform designed to connect content creators with video clippers.
 
-Creators can publish clipping opportunities and find people who can transform their long-form content into engaging short-form videos.
+Creators can publish clipping opportunities and find talented people who can transform their long-form content into engaging short-form videos.
 
 Clippers get a place to discover creators, participate in clipping opportunities, showcase their editing skills, and earn from their work.
 
@@ -33,7 +33,7 @@ The idea is simple:
 
 > **Creators create. Clippers amplify. ClipGaram connects them.**
 
-ClipGaram is being built with an initial focus on Nepal's growing creator economy, while keeping the platform capable of expanding beyond it.
+ClipGaram is being built with an initial focus on Nepal's growing creator economy, with the vision of expanding beyond it.
 
 ---
 
@@ -61,8 +61,8 @@ ClipGaram is being built with an initial focus on Nepal's growing creator econom
 - **Responsive authentication** — designed specifically for desktop and mobile.
 - **Animated mobile onboarding** — an interactive introduction before authentication.
 - **Light & Dark Mode** — a consistent experience across both themes.
-- **Reusable design system** — shared colors, typography, spacing and UI tokens.
-- **Responsive UI** — layouts and interactions adapt across screen sizes.
+- **Reusable design system** — shared colors, typography, spacing, and UI tokens.
+- **Responsive UI** — layouts and interactions adapt naturally across screen sizes.
 
 ### Planned
 
@@ -79,14 +79,14 @@ ClipGaram is being built with an initial focus on Nepal's growing creator econom
 
 ---
 
-## How It Will Work
+## How ClipGaram Works
 
 ```text
 CREATOR
    │
    ├── Creates a campaign
    │
-   ├── Uploads / links content
+   ├── Adds content
    │
    └── Sets clipping requirements
               │
@@ -94,7 +94,7 @@ CREATOR
           CLIPGARAM
               │
               ▼
-          CLIPPERS
+           CLIPPERS
               │
    ├── Discover campaigns
    ├── Create short-form clips
@@ -104,7 +104,7 @@ CREATOR
        Creator reviews clips
               │
               ▼
-       Clipper gets rewarded
+        Clipper gets rewarded
 ```
 
 ---
@@ -114,7 +114,7 @@ CREATOR
 | Technology | Purpose |
 |---|---|
 | **React** | Frontend user interface |
-| **TypeScript** | Type-safe development |
+| **TypeScript** | Type-safe application development |
 | **Vite** | Development & build tooling |
 | **CSS** | Styling, animations & responsive design |
 | **Vitest** | Testing |
@@ -122,6 +122,8 @@ CREATOR
 ---
 
 ## Getting Started
+
+> **Note:** ClipGaram is proprietary software. Access to this repository does not grant permission to copy, redistribute, modify, or commercially use the source code.
 
 ### 1. Clone the repository
 
@@ -147,7 +149,7 @@ npm install
 npm run dev
 ```
 
-Vite will display the local development URL in your terminal.
+Vite will display the local development URL in the terminal.
 
 ---
 
@@ -177,7 +179,6 @@ ClipGaram/
 ├── src/
 │   ├── components/
 │   │   └── auth/
-│   │
 │   ├── pages/
 │   ├── styles/
 │   ├── theme/
@@ -196,19 +197,19 @@ ClipGaram/
 
 ## Design Philosophy
 
-ClipGaram aims to feel **simple, playful and human** rather than like a generic dashboard.
+ClipGaram aims to feel **simple, playful, and human** rather than like a generic marketplace or dashboard.
 
 The interface focuses on:
 
-- clear visual hierarchy
-- purposeful animation
-- minimal interfaces
-- strong typography
-- responsive interactions
-- consistent light and dark themes
-- mobile experiences designed independently where necessary
+- Clear visual hierarchy
+- Purposeful animation
+- Minimal interfaces
+- Strong typography
+- Responsive interactions
+- Consistent light and dark themes
+- Mobile experiences designed specifically for smaller screens
 
-The goal is to make ClipGaram feel like a product built for creators — not another corporate marketplace.
+The goal is to make ClipGaram feel like a product built **for creators and clippers**, not another generic marketplace.
 
 ---
 
@@ -232,39 +233,50 @@ Notifications                   ░░░░░░░░░░  Planned
 
 ## Why ClipGaram?
 
-Short-form content has become one of the primary ways creators reach new audiences.
+Short-form content has become one of the most powerful ways for creators to reach new audiences.
 
-But consistently turning long-form content into quality short-form clips requires time, editing skills and distribution effort.
+But consistently turning long-form content into quality short-form clips requires time, editing skills, and distribution effort.
 
-At the same time, talented editors and aspiring clippers need opportunities to work with creators.
+At the same time, talented editors and aspiring clippers need opportunities to work with creators and monetize their skills.
 
-**ClipGaram aims to bring both sides together.**
+**ClipGaram brings both sides together.**
 
 ---
 
-## Contributing
+## Development Status
 
-ClipGaram is currently in early development.
+🚧 **ClipGaram is currently under active development.**
 
-If you're interested in the project, feel free to:
+The current version primarily focuses on the authentication, onboarding, responsive experience, and core design system.
 
-- ⭐ Star the repository
-- 🐛 Open an issue
-- 💡 Suggest a feature
-- 🔧 Submit a pull request
+More of the platform will be introduced as development progresses.
+
+---
+
+## License
+
+**Copyright © 2026 BlackInOne69. All Rights Reserved.**
+
+ClipGaram is **proprietary software**.
+
+The source code, designs, assets, branding, documentation, and other materials contained in this repository may not be copied, modified, reproduced, distributed, sublicensed, sold, or used commercially without explicit written permission from the copyright holder.
+
+Public availability of the repository or source code does **not** grant any license or ownership rights.
+
+See [LICENSE](LICENSE) for full license terms.
 
 ---
 
 ## Author
 
-Built by **BlackInOne69**
+Built and maintained by **BlackInOne69**.
 
 GitHub: [@BlackInOne69](https://github.com/BlackInOne69)
 
 ---
 
 <p align="center">
-  <b>Creators create. Clippers amplify.</b>
+  <strong>Creators create. Clippers amplify.</strong>
 </p>
 
 <p align="center">
