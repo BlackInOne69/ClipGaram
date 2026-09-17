@@ -1,221 +1,330 @@
-/* Mobile only: the desktop composition and existing shared controls stay intact. */
+/* The 760px breakpoint changes one shared shell from split screen to staged screen. */
 @media (max-width: 760px) {
   html:has(.mobile-auth-experience),
   body:has(.mobile-auth-experience) {
-    height: 100%;
+    inline-size: 100%;
+    block-size: 100%;
     overflow: hidden;
     overscroll-behavior: none;
   }
+
   .signup-page:has(.mobile-auth-experience) {
-    min-height: 100dvh;
-    height: 100dvh;
+    min-block-size: 100dvh;
+    block-size: 100dvh;
     overflow: hidden;
   }
+
   .mobile-auth-experience {
-    min-height: 100dvh;
-    height: 100dvh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: max(22px, env(safe-area-inset-top)) 16px
-      max(16px, env(safe-area-inset-bottom));
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    inline-size: 100%;
+    block-size: 100%;
     overflow: hidden;
   }
-  .mobile-brand {
-    align-self: stretch;
-    flex: 0 0 auto;
-    padding: 0 8px;
-    min-height: 46px;
+
+  .mobile-auth-experience > .auth-column {
+    grid-area: 1 / 1;
+    inline-size: 100%;
+    block-size: 100%;
   }
-  .mobile-brand .brand {
-    font-size: 24px;
+
+  .mobile-auth-experience[data-stage="intro"] .auth-form-column,
+  .mobile-auth-experience[data-stage="intro-exiting"] .auth-form-column,
+  .mobile-auth-experience[data-stage="auth"] .auth-visual-column {
+    display: none;
   }
-  .skip-intro {
-    position: absolute;
-    top: max(24px, env(safe-area-inset-top));
-    right: 70px;
-    min-width: 44px;
-    min-height: 36px;
-    padding: 6px;
+
+  .form-side {
     border: 0;
-    border-radius: 7px;
-    color: var(--cg-text-muted);
-    background: transparent;
-    font-size: 13px;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    padding: max(1rem, env(safe-area-inset-top)) clamp(0.75rem, 4dvw, 1.25rem)
+      max(0.75rem, env(safe-area-inset-bottom));
   }
-  .mobile-intro {
-    flex: 1;
-    min-height: 0;
-    width: 100%;
-    max-width: 520px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 35px;
-  }
-  .mobile-intro h1 {
+
+  .auth-brand {
     flex: 0 0 auto;
-    font-size: clamp(30px, 9.2vw, 42px);
+    min-block-size: clamp(2.5rem, 7dvh, 3.25rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .theme-toggle.mobile-auth-theme-toggle {
+    display: grid;
+    position: static;
+  }
+
+  .brand {
+    margin-inline-start: clamp(-0.75rem, -2dvw, -0.35rem);
+  }
+
+  .form-content {
+    align-items: stretch;
+    justify-content: center;
+    overflow: hidden;
+    padding-block: clamp(0.5rem, 1.8dvh, 1rem) 0;
+  }
+
+  .auth-panel {
+    inline-size: min(100%, 26.25rem);
+    max-block-size: 100%;
+    min-block-size: 0;
+    margin: auto;
+    padding: clamp(1rem, 2.8dvh, 1.5rem) clamp(1rem, 4.8dvw, 1.375rem);
+    border: 1px solid var(--cg-border);
+    border-radius: clamp(0.875rem, 4dvw, 1.375rem);
+    background: var(--cg-surface);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scroll-padding-block: 1rem;
+    animation: mobile-auth-enter 280ms ease-out both;
+  }
+
+  .auth-panel-heading h1 {
+    white-space: normal;
+    font-size: clamp(1.8rem, min(8.2dvw, 5dvh), 2.25rem);
     line-height: 1.08;
-    letter-spacing: -1.7px;
+    letter-spacing: -0.045em;
+  }
+
+  .auth-panel-heading p {
+    margin-block-start: clamp(0.4rem, 1.1dvh, 0.625rem);
+    font-size: clamp(0.72rem, min(3.2dvw, 1.75dvh), 0.8125rem);
+    line-height: 1.42;
+  }
+
+  .auth-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.5rem, 4dvw, 1rem);
+    margin-block-start: clamp(0.65rem, 1.7dvh, 1.25rem);
+    border-block-end: 1px solid var(--cg-border);
+  }
+
+  .auth-tabs button {
+    min-block-size: clamp(2.2rem, 5.1dvh, 2.6875rem);
+    padding: 0.4rem;
+    border: 0;
+    border-block-end: 2px solid transparent;
+    background: transparent;
+    color: var(--cg-text-muted);
+    font-size: clamp(0.82rem, 3.7dvw, 0.9375rem);
+    font-weight: 600;
+  }
+
+  .auth-tabs button[aria-selected="true"] {
+    border-block-end-color: var(--cg-primary);
+    color: var(--cg-text);
+  }
+
+  .auth-panel form {
+    margin-block-start: clamp(0.75rem, 2dvh, 1.375rem);
+  }
+
+  .auth-panel .account-type legend {
+    font-size: clamp(0.65rem, 2.8dvw, 0.75rem);
+  }
+
+  .auth-panel .segments span {
+    min-block-size: clamp(2.35rem, 5.3dvh, 2.6875rem);
+    font-size: clamp(0.85rem, 3.8dvw, 1rem);
+  }
+
+  .auth-panel .google-button {
+    min-block-size: clamp(2.55rem, 5.8dvh, 3.0625rem);
+    margin-block-start: clamp(0.65rem, 1.7dvh, 1.1875rem);
+    padding-inline: 2.625rem 0.75rem;
+    font-size: clamp(0.8rem, 3.5dvw, 0.9375rem);
+  }
+
+  .auth-panel form > .google-button:first-child {
+    margin-block-start: 0;
+  }
+
+  .auth-panel .google-logo {
+    inset-inline-start: 0.8125rem;
+    inline-size: clamp(1.35rem, 5.8dvw, 1.5625rem);
+    block-size: clamp(1.35rem, 5.8dvw, 1.5625rem);
+  }
+
+  .auth-panel .divider {
+    margin-block: clamp(0.45rem, 1.25dvh, 1.0625rem);
+    font-size: clamp(0.65rem, 2.8dvw, 0.75rem);
+  }
+
+  .auth-panel .field label {
+    margin-block-end: clamp(0.25rem, 0.65dvh, 0.5rem);
+    font-size: clamp(0.72rem, 3.1dvw, 0.8125rem);
+  }
+
+  .auth-panel .input-wrap {
+    block-size: clamp(2.55rem, 5.8dvh, 3.0625rem);
+    gap: clamp(0.5rem, 2.5dvw, 0.625rem);
+    padding-inline-start: 0.75rem;
+  }
+
+  .auth-panel .input-wrap > svg {
+    inline-size: clamp(1.1rem, 4.8dvw, 1.3125rem);
+  }
+
+  .auth-panel .input-wrap input {
+    font-size: clamp(0.8rem, 3.5dvw, 0.9375rem);
+  }
+
+  .auth-panel .password-field {
+    margin-block-start: clamp(0.65rem, 1.6dvh, 1.125rem);
+  }
+
+  .auth-panel .primary-button {
+    min-block-size: clamp(2.55rem, 5.8dvh, 3.0625rem);
+    margin-block-start: clamp(0.75rem, 1.8dvh, 1.5625rem);
+    border-radius: clamp(0.75rem, 3.5dvw, 1.0625rem);
+    font-size: clamp(0.85rem, 3.7dvw, 1rem);
+  }
+
+  .auth-panel .sign-in {
+    margin-block-start: clamp(0.65rem, 1.5dvh, 1.125rem);
+    font-size: clamp(0.68rem, 2.9dvw, 0.75rem);
+  }
+
+  .auth-panel .legal {
+    margin-block-start: clamp(0.7rem, 1.8dvh, 1.25rem);
+    font-size: clamp(0.62rem, 2.7dvw, 0.6875rem);
+    line-height: 1.5;
+  }
+
+  .auth-panel .forgot-password {
+    margin-block-start: clamp(0.45rem, 1.1dvh, 0.75rem);
+    color: var(--cg-primary);
+    font-size: clamp(0.68rem, 2.9dvw, 0.75rem);
+    text-align: end;
+  }
+
+  .auth-panel .success-state {
+    margin-block-start: 0;
+    padding-block: clamp(1rem, 3dvh, 1.75rem) 0;
+  }
+
+  .auth-panel .success-state h2 {
+    font-size: clamp(1.6rem, 7dvw, 1.8125rem);
+  }
+
+  .illustration-side {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    padding: max(1rem, env(safe-area-inset-top)) clamp(0.75rem, 4dvw, 1.25rem)
+      max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .mobile-intro-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-inline-size: 0;
+    min-block-size: clamp(2.5rem, 6dvh, 3.25rem);
+    gap: 0.75rem;
+  }
+
+  .mobile-intro-actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.25rem, 2dvw, 0.625rem);
+    flex: 0 0 auto;
+  }
+
+  .mobile-intro-stage {
+    min-inline-size: 0;
+    min-block-size: 0;
+    display: grid;
+    grid-template-rows: auto auto;
+    align-content: center;
+    justify-items: center;
+    gap: clamp(0.5rem, 1.5dvh, 1.125rem);
+    padding-block: clamp(0.75rem, 2.5dvh, 1.5rem) 0;
+  }
+
+  .illustration-side .mobile-intro-title {
+    position: static;
+    inline-size: auto;
+    max-inline-size: min(90%, 24rem);
+    margin: 0;
+    font-size: clamp(2rem, min(9dvw, 5dvh), 3.25rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
     text-align: center;
   }
+
+  .mobile-intro-animation {
+    inline-size: min(100%, 34rem);
+    block-size: auto;
+    max-block-size: min(58dvh, 34rem);
+    aspect-ratio: 800 / 610;
+    min-block-size: 0;
+    min-inline-size: 0;
+    margin: 0;
+    display: grid;
+    place-items: center;
+  }
+
   .mobile-intro .journey {
-    width: 100%;
-    max-height: 52dvh;
-    margin: 24px 0 0;
-    overflow: hidden;
+    inline-size: 100%;
+    block-size: 100%;
+    margin: 0;
   }
-  .mobile-intro .film-strip,
-  .mobile-intro .cut-line,
-  .mobile-intro .scissors {
+
+  .mobile-brand {
     display: block;
+    min-inline-size: 0;
   }
-  /* The final SVG path ends at 3.55s; hold 150ms, then exit for 250ms. */
+
+  .skip-intro {
+    display: inline-grid;
+    place-items: center;
+    position: static;
+    min-inline-size: 2.75rem;
+    min-block-size: 2.5rem;
+    padding: 0.35rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: var(--cg-text-muted);
+    font-size: clamp(0.72rem, 3dvw, 0.8125rem);
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+  }
+
+  .theme-toggle {
+    position: static;
+    inline-size: clamp(2.25rem, 9dvw, 2.5rem);
+    block-size: clamp(2.25rem, 9dvw, 2.5rem);
+  }
+
   .mobile-intro.is-exiting {
     animation: mobile-intro-exit 250ms 150ms ease-in both;
   }
-  .auth-panel {
-    flex: 0 1 auto;
-    min-height: 0;
-    width: min(100%, 420px);
-    margin: auto 0;
-    padding: 25px 22px 22px;
-    border: 1px solid var(--cg-border);
-    border-radius: 22px;
-    background: var(--cg-surface);
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    animation: mobile-auth-enter 280ms ease-out both;
-    scroll-padding: 20px;
-  }
-  .auth-panel-heading h1 {
-    font-size: clamp(29px, 8.3vw, 36px);
-    letter-spacing: -1.5px;
-    line-height: 1.1;
-  }
-  .auth-panel-heading p {
-    color: var(--cg-text-muted);
-    font-size: 13px;
-    line-height: 1.5;
-    margin-top: 10px;
-  }
-  .auth-tabs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid var(--cg-border);
-    margin-top: 20px;
-    gap: 16px;
-  }
-  .auth-tabs button {
-    min-height: 43px;
-    padding: 8px;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    background: transparent;
-    color: var(--cg-text-muted);
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .auth-tabs button[aria-selected="true"] {
-    border-bottom-color: var(--cg-primary);
-    color: var(--cg-text);
-  }
-  .auth-panel form {
-    margin-top: 22px;
-  }
-  .auth-panel .account-type legend {
-    font-size: 11px;
-  }
-  .auth-panel .segments span {
-    min-height: 43px;
-    font-size: 16px;
-  }
-  .auth-panel .google-button {
-    padding-inline: 42px 12px;
-    margin-top: 19px;
-    min-height: 49px;
-    font-size: 15px;
-  }
-  .auth-panel form > .google-button:first-child {
-    margin-top: 0;
-  }
-  .auth-panel .google-logo {
-    width: 25px;
-    height: 25px;
-    left: 13px;
-  }
-  .auth-panel .divider {
-    margin: 17px 0;
-    font-size: 12px;
-  }
-  .auth-panel .field label {
-    font-size: 13px;
-  }
-  .auth-panel .input-wrap {
-    height: 49px;
-    padding-left: 12px;
-    gap: 10px;
-  }
-  .auth-panel .input-wrap > svg {
-    width: 21px;
-  }
-  .auth-panel .password-field {
-    margin-top: 18px;
-  }
-  .auth-panel .primary-button {
-    min-height: 49px;
-    margin-top: 25px;
-    font-size: 16px;
-  }
-  .auth-panel .sign-in {
-    margin-top: 18px;
-    font-size: 12px;
-  }
-  .auth-panel .legal {
-    margin-top: 20px;
-    font-size: 11px;
-    line-height: 1.6;
-  }
-  .auth-panel .forgot-password {
-    text-align: right;
-    margin-top: 12px;
-    font-size: 12px;
-    color: var(--cg-primary);
-  }
-  .auth-panel .success-state {
-    margin-top: 0;
-    padding: 25px 0 0;
-  }
-  .auth-panel .success-state h2 {
-    font-size: 29px;
-  }
-  .auth-panel .success-state p {
-    font-size: 14px;
-  }
+
   @keyframes mobile-intro-exit {
     to {
       opacity: 0;
       transform: scale(0.96);
     }
   }
+
   @keyframes mobile-auth-enter {
     from {
       opacity: 0;
-      transform: translateY(12px);
+      transform: translateY(0.75rem);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
 }
+
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
   .mobile-intro,
   .auth-panel {

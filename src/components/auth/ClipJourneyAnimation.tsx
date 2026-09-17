@@ -10,6 +10,7 @@ export function ClipJourneyAnimation({
     <svg
       className="journey"
       viewBox="0 0 800 610"
+      preserveAspectRatio="xMidYMid meet"
       role="img"
       aria-labelledby="journey-title journey-description"
       onAnimationEnd={(event) => {

@@ -3,6 +3,7 @@
 }
 body {
   margin: 0;
+  overflow: hidden;
 }
 button,
 input {
@@ -28,37 +29,96 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 .signup-page {
+  --form-column-ratio: 44fr;
+  --visual-column-ratio: 56fr;
   position: relative;
+  inline-size: 100%;
+  block-size: 100dvh;
+  min-block-size: 0;
+  overflow: hidden;
+}
+.auth-shell {
+  inline-size: min(100%, 1800px);
+  block-size: 100%;
+  min-block-size: 0;
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: 44% 56%;
-  min-height: 100svh;
-  max-width: 1800px;
-  margin: 0 auto;
+  grid-template-columns:
+    minmax(0, var(--form-column-ratio))
+    minmax(0, var(--visual-column-ratio));
+}
+.auth-column {
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: hidden;
 }
 .form-side {
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
   border-right: 1px solid color-mix(in srgb, var(--cg-border) 50%, transparent);
-  padding: 40px 10.3% 52px 11.7%;
+  padding-inline: clamp(1.5rem, 4.5dvw, 5rem);
+  padding-block: clamp(1rem, 3.6dvh, 2.75rem);
 }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  margin-left: -25px;
+  margin-left: -16px;
   text-decoration: none;
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -1.3px;
 }
-.brand svg {
-  width: 44px;
-  height: 40px;
-  fill: none;
-  stroke-width: 9;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.clipgaram-logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  min-inline-size: 0;
+  inline-size: fit-content;
+  flex-shrink: 0;
+  line-height: 0;
+}
+.clipgaram-logo-img {
+  display: block;
+  inline-size: clamp(11.5rem, 18vw, 16rem);
+  block-size: auto;
+  max-inline-size: 100%;
+  flex: 0 0 auto;
+  aspect-ratio: 990 / 265;
+  object-fit: contain;
+  opacity: 1;
+  transform: none;
 }
 .form-content {
-  margin-top: 85px;
+  flex: 1 1 auto;
+  min-block-size: 0;
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  padding-block: clamp(0.75rem, 2dvh, 1.5rem);
+}
+.auth-panel {
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+.auth-panel-heading h1 {
+  font-size: clamp(2.25rem, min(4.75dvw, 7dvh), 4.75rem);
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: clamp(-0.23rem, -0.22dvw, -0.1rem);
+  white-space: nowrap;
+}
+.auth-heading:focus,
+.auth-heading:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.auth-panel-heading p {
+  color: var(--cg-text-muted);
+  font-size: clamp(0.875rem, min(1.35dvw, 2.1dvh), 1.3125rem);
+  line-height: 1.35;
+  margin-top: clamp(0.6rem, 1.7dvh, 1.375rem);
+  letter-spacing: -0.03em;
+  max-inline-size: 34rem;
+}
+.auth-tabs {
+  display: none;
 }
 h1,
 h2,
@@ -66,7 +126,7 @@ p {
   margin: 0;
 }
 .form-intro h1 {
-  font-size: clamp(44px, 4.75vw, 76px);
+  font-size: clamp(2.25rem, min(4.75dvw, 7dvh), 4.75rem);
   line-height: 1.04;
   font-weight: 700;
   letter-spacing: -3.7px;
@@ -74,13 +134,13 @@ p {
 }
 .form-intro p {
   color: var(--cg-text-muted);
-  font-size: clamp(16px, 1.35vw, 21px);
+  font-size: clamp(0.875rem, min(1.35dvw, 2.1dvh), 1.3125rem);
   line-height: 1.35;
-  margin-top: 22px;
+  margin-top: clamp(0.6rem, 1.7dvh, 1.375rem);
   letter-spacing: -0.65px;
 }
 form {
-  margin-top: 35px;
+  margin-top: clamp(0.8rem, 2.4dvh, 2.1875rem);
 }
 .account-type {
   padding: 0;
@@ -93,7 +153,7 @@ form {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  margin-bottom: 10px;
+  margin-bottom: clamp(0.35rem, 0.8dvh, 0.625rem);
 }
 .segments {
   display: grid;
@@ -116,8 +176,8 @@ form {
 .segments span {
   display: grid;
   place-items: center;
-  min-height: 49px;
-  font-size: 20px;
+  min-height: clamp(2.5rem, 5.4dvh, 3.0625rem);
+  font-size: clamp(0.9rem, min(1.35dvw, 2dvh), 1.25rem);
   font-weight: 500;
 }
 .segments input:checked + span {
@@ -134,13 +194,13 @@ form {
   justify-content: center;
   position: relative;
   width: 100%;
-  min-height: 59px;
-  margin-top: 30px;
+  min-height: clamp(2.75rem, 6dvh, 3.6875rem);
+  margin-top: clamp(0.65rem, 1.9dvh, 1.875rem);
   border: 1px solid var(--cg-border);
   border-radius: 12px;
   background: var(--cg-surface-raised);
   color: var(--cg-text);
-  font-size: 18px;
+  font-size: clamp(0.9rem, min(1.2dvw, 1.9dvh), 1.125rem);
   font-weight: 500;
 }
 .google-button:hover {
@@ -149,14 +209,14 @@ form {
 .google-logo {
   position: absolute;
   left: 16px;
-  width: 35px;
-  height: 35px;
+  width: clamp(1.7rem, 3.6dvh, 2.1875rem);
+  height: clamp(1.7rem, 3.6dvh, 2.1875rem);
 }
 .divider {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 23px 0;
+  margin: clamp(0.55rem, 1.5dvh, 1.4375rem) 0;
   color: var(--cg-text-muted);
   font-size: 14px;
 }
@@ -171,7 +231,7 @@ form {
   display: block;
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: clamp(0.3rem, 0.7dvh, 0.625rem);
 }
 .required {
   color: var(--cg-primary);
@@ -182,7 +242,7 @@ form {
   gap: 13px;
   padding-left: 17px;
   color: var(--cg-text-muted);
-  height: 57px;
+  height: clamp(2.75rem, 5.8dvh, 3.5625rem);
   background: var(--cg-surface);
   border: 1px solid var(--cg-border);
   border-radius: 10px;
@@ -205,7 +265,7 @@ form {
   color: var(--cg-text);
   height: 100%;
   padding: 0 10px 0 0;
-  font-size: 17px;
+  font-size: clamp(0.9rem, min(1.15dvw, 1.8dvh), 1.0625rem);
   outline: none;
 }
 .input-wrap input::placeholder {
@@ -220,7 +280,7 @@ form {
   display: flex;
 }
 .password-field {
-  margin-top: 25px;
+  margin-top: clamp(0.6rem, 1.6dvh, 1.5625rem);
   position: relative;
 }
 .password-hint {
@@ -250,21 +310,21 @@ form {
   gap: 13px;
   border: 1px solid var(--cg-primary);
   border-radius: 17px;
-  min-height: 54px;
+  min-height: clamp(2.75rem, 5.7dvh, 3.375rem);
   width: 100%;
   background: var(--cg-primary);
   color: var(--cg-text-inverse);
   font-weight: 500;
-  font-size: 20px;
-  margin-top: 24px;
+  font-size: clamp(0.95rem, min(1.35dvw, 2dvh), 1.25rem);
+  margin-top: clamp(0.75rem, 1.8dvh, 1.5rem);
 }
 .primary-button:hover {
   background: var(--cg-primary-hover);
 }
 .sign-in {
   text-align: center;
-  font-size: 15px;
-  margin-top: 28px;
+  font-size: clamp(0.75rem, min(1dvw, 1.5dvh), 0.9375rem);
+  margin-top: clamp(0.65rem, 1.7dvh, 1.75rem);
 }
 .sign-in a {
   color: var(--cg-primary);
@@ -272,8 +332,8 @@ form {
   font-weight: 500;
 }
 .legal {
-  margin-top: 52px;
-  font-size: 14px;
+  margin-top: clamp(0.75rem, 3.4dvh, 3.25rem);
+  font-size: clamp(0.7rem, min(0.95dvw, 1.35dvh), 0.875rem);
   line-height: 1.5;
   letter-spacing: -0.35px;
   color: var(--cg-text-muted);
@@ -282,24 +342,47 @@ form {
   color: var(--cg-primary);
 }
 .illustration-side {
-  min-width: 0;
-  padding-top: 137px;
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-block: clamp(2.75rem, 11dvh, 8.5625rem) clamp(1rem, 3dvh, 2.5rem);
   overflow: hidden;
 }
 .illustration-side h2 {
-  font-size: clamp(46px, 4.95vw, 80px);
+  flex: 0 0 auto;
+  font-size: clamp(2.5rem, min(4.95dvw, 7.5dvh), 5rem);
   line-height: 1.02;
-  letter-spacing: -3.2px;
+  letter-spacing: clamp(-0.2rem, -0.22dvw, -0.1rem);
   font-weight: 700;
-  margin-left: 13%;
+  margin-inline: clamp(2rem, 13%, 7rem);
+}
+.auth-animation-wrapper {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  min-inline-size: 0;
+  display: grid;
+  place-items: center;
+}
+.mobile-intro-header,
+.mobile-intro-stage {
+  display: contents;
+}
+.theme-toggle.mobile-auth-theme-toggle {
+  display: none;
 }
 .journey {
   display: block;
-  width: 100%;
-  height: auto;
-  margin-top: 39px;
-  overflow: visible;
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  margin: 0;
+  overflow: hidden;
   font-family: var(--cg-font-ui);
+}
+.mobile-brand,
+.skip-intro {
+  display: none;
 }
 .theme-toggle {
   position: absolute;
@@ -516,156 +599,6 @@ form {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-@media (min-width: 1600px) {
-  .intro-break {
-    display: none;
-  }
-}
-@media (max-width: 1100px) and (min-width: 761px) {
-  .form-side {
-    padding-left: 8%;
-    padding-right: 8%;
-  }
-  .brand {
-    margin-left: 0;
-  }
-  .form-intro h1 {
-    font-size: 4.7vw;
-    letter-spacing: -2.6px;
-  }
-  .intro-break {
-    display: none;
-  }
-  .illustration-side h2 {
-    margin-left: 9%;
-    font-size: 5vw;
-    letter-spacing: -2.5px;
-  }
-  .legal-break {
-    display: none;
-  }
-}
-@media (max-width: 760px) {
-  .signup-page {
-    display: block;
-  }
-  .form-side {
-    border: 0;
-    padding: 28px 24px 0;
-    max-width: 550px;
-    margin: auto;
-  }
-  .brand {
-    margin-left: 0;
-    font-size: 25px;
-    gap: 9px;
-    letter-spacing: -1px;
-  }
-  .brand svg {
-    width: 34px;
-    height: 34px;
-  }
-  .theme-toggle {
-    top: 25px;
-    right: 22px;
-    width: 36px;
-    height: 36px;
-  }
-  .form-content {
-    margin-top: 51px;
-  }
-  .form-intro h1 {
-    font-size: clamp(34px, 10.6vw, 52px);
-    letter-spacing: -2px;
-    line-height: 1.07;
-  }
-  .form-intro p {
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: -0.4px;
-    margin-top: 17px;
-  }
-  .intro-break {
-    display: none;
-  }
-  form {
-    margin-top: 27px;
-  }
-  .account-type legend {
-    font-size: 12px;
-  }
-  .segments span {
-    font-size: 17px;
-    min-height: 46px;
-  }
-  .google-button {
-    margin-top: 23px;
-    font-size: 16px;
-    min-height: 54px;
-  }
-  .google-logo {
-    width: 30px;
-    height: 30px;
-  }
-  .divider {
-    margin: 20px 0;
-  }
-  .field label {
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-  .input-wrap {
-    height: 54px;
-  }
-  .input-wrap input {
-    font-size: 16px;
-  }
-  .password-field {
-    margin-top: 22px;
-  }
-  .primary-button {
-    font-size: 17px;
-    border-radius: 13px;
-  }
-  .sign-in {
-    font-size: 13px;
-    margin-top: 25px;
-  }
-  .sign-in a {
-    margin-left: 7px;
-  }
-  .legal {
-    font-size: 12px;
-    margin-top: 34px;
-    letter-spacing: -0.1px;
-  }
-  .legal-break {
-    display: none;
-  }
-  .illustration-side {
-    padding: 58px 24px 32px;
-    max-width: 550px;
-    margin: auto;
-    overflow: hidden;
-  }
-  .illustration-side h2 {
-    font-size: 39px;
-    line-height: 1.05;
-    letter-spacing: -1.8px;
-    margin-left: 0;
-  }
-  .journey {
-    width: 150%;
-    max-width: none;
-    margin-top: 20px;
-    margin-left: -48%;
-  }
-  .film-strip,
-  .cut-line,
-  .scissors {
-    display: none;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   *,

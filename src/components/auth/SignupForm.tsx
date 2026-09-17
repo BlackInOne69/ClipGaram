@@ -14,14 +14,16 @@ export function SignupForm({
   panel = false,
   mode = "signup",
   onSwitch,
+  initialRole = "Clipper",
 }: {
   onInfo: (title: string) => void;
   panel?: boolean;
   mode?: "signup" | "login";
   onSwitch?: () => void;
+  initialRole?: AccountType;
 }) {
   const login = mode === "login";
-  const [role, setRole] = useState<AccountType>("Clipper");
+  const [role, setRole] = useState<AccountType>(initialRole);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);

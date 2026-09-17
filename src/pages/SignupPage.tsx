@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "@phosphor-icons/react";
-import { SignupForm } from "../components/auth/SignupForm";
-import { ClipJourneyAnimation } from "../components/auth/ClipJourneyAnimation";
-import { ThemeToggle } from "../components/auth/ThemeToggle";
 import type { ClipGaramThemeName } from "../theme/clipgaram-theme";
 
-import { Brand } from "../components/auth/Brand";
 import { MobileAuthExperience } from "../components/auth/MobileAuthExperience";
-import { useMediaQuery } from "../components/auth/useMediaQuery";
 import "../styles/mobile-auth.css";
 
 function initialTheme(): ClipGaramThemeName {
@@ -21,7 +16,9 @@ function initialTheme(): ClipGaramThemeName {
 }
 
 export function SignupPage() {
-  const mobile = useMediaQuery("(max-width: 760px)");
+  const params = new URLSearchParams(window.location.search);
+  const initialTab = window.location.pathname === "/login" ? "login" : "signup";
+  const initialRole = params.get("role") === "Creator" ? "Creator" : "Clipper";
   const [theme, setTheme] = useState<ClipGaramThemeName>(initialTheme);
   const [info, setInfo] = useState("");
   const dialog = useRef<HTMLDialogElement>(null);
@@ -42,33 +39,13 @@ export function SignupPage() {
   }
   return (
     <main className="signup-page">
-      {mobile ? (
-        <MobileAuthExperience onInfo={openInfo} />
-      ) : (
-        <>
-          <section
-            className="form-side"
-            aria-label="Create your ClipGaram account"
-          >
-            <Brand />
-            <div className="form-content">
-              <SignupForm onInfo={openInfo} />
-            </div>
-          </section>
-          <section
-            className="illustration-side"
-            aria-labelledby="journey-heading"
-          >
-            <h2 id="journey-heading">
-              Turn moments
-              <br />
-              into momentum.
-            </h2>
-            <ClipJourneyAnimation />
-          </section>
-        </>
-      )}
-      <ThemeToggle theme={theme} onChange={setTheme} />
+      <MobileAuthExperience
+        onInfo={openInfo}
+        theme={theme}
+        onThemeChange={setTheme}
+        initialTab={initialTab}
+        initialRole={initialRole}
+      />
       <dialog ref={dialog} className="info-dialog" aria-labelledby="info-title">
         <button
           className="dialog-close"

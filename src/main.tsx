@@ -9,9 +9,12 @@ import "@fontsource/inter/700.css";
 import "./styles/clipgaram-tokens.css";
 import "./styles/signup.css";
 import { SignupPage } from "./pages/SignupPage";
+import { LandingPage } from "./pages/LandingPage";
+
+const authRoute = ["/signup", "/login", "/auth"].includes(
+  window.location.pathname,
+);
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <SignupPage />
-  </StrictMode>,
+  <StrictMode>{authRoute ? <SignupPage /> : <LandingPage />}</StrictMode>,
 );

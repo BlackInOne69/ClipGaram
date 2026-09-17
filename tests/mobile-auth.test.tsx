@@ -9,6 +9,12 @@ import {
 } from "@testing-library/react";
 import { MobileAuthExperience } from "../src/components/auth/MobileAuthExperience";
 
+const experienceProps = {
+  onInfo: () => {},
+  theme: "light" as const,
+  onThemeChange: () => {},
+};
+
 let reduced = false;
 let listeners: Set<() => void>;
 function endAnimation(element: Element, animationName: string) {
@@ -38,9 +44,11 @@ afterEach(() => {
 });
 
 describe("mobile authentication lifecycle", () => {
-  it("mounts no form during the intro, then completes through the SVG callback and exit event", () => {
-    const { container } = render(<MobileAuthExperience onInfo={() => {}} />);
-    expect(container.querySelector("form")).toBeNull();
+  it("keeps one shared shell and completes through the SVG callback and exit event", () => {
+    const { container } = render(<MobileAuthExperience {...experienceProps} />);
+    expect(container.querySelectorAll(".auth-column")).toHaveLength(2);
+    expect(container.querySelectorAll("form")).toHaveLength(1);
+    expect(document.activeElement?.id).not.toBe("auth-heading");
     endAnimation(container.querySelector("#clipOne")!, "rise");
     expect(
       container.querySelector("[data-stage]")?.getAttribute("data-stage"),
@@ -49,18 +57,20 @@ describe("mobile authentication lifecycle", () => {
     expect(
       container.querySelector("[data-stage]")?.getAttribute("data-stage"),
     ).toBe("intro-exiting");
-    expect(container.querySelector("form")).toBeNull();
     endAnimation(
       container.querySelector(".mobile-intro")!,
       "mobile-intro-exit",
     );
-    expect(container.querySelector(".journey")).toBeNull();
+    expect(
+      container.querySelector("[data-stage]")?.getAttribute("data-stage"),
+    ).toBe("auth");
+    expect(container.querySelector(".journey")).toBeTruthy();
     expect(container.querySelectorAll("form")).toHaveLength(1);
     expect(document.activeElement?.id).toBe("auth-heading");
   });
 
   it("skips directly to auth and does not replay the introduction when switching tabs", () => {
-    const { container } = render(<MobileAuthExperience onInfo={() => {}} />);
+    const { container } = render(<MobileAuthExperience {...experienceProps} />);
     fireEvent.click(screen.getByRole("button", { name: "Skip introduction" }));
     expect(document.activeElement?.id).toBe("auth-heading");
     fireEvent.click(screen.getByRole("tab", { name: "Log In" }));
@@ -69,37 +79,47 @@ describe("mobile authentication lifecycle", () => {
     fireEvent.click(screen.getByRole("link", { name: "Sign Up" }));
     expect(screen.getByRole("group", { name: "Account Type" })).toBeTruthy();
     expect(container.querySelectorAll("form")).toHaveLength(1);
-    expect(container.querySelector(".journey")).toBeNull();
+    expect(
+      container.querySelector("[data-stage]")?.getAttribute("data-stage"),
+    ).toBe("auth");
   });
 
   it("bypasses the intro on initial reduced motion and on a live preference change", () => {
     reduced = true;
-    const first = render(<MobileAuthExperience onInfo={() => {}} />);
+    const first = render(<MobileAuthExperience {...experienceProps} />);
     expect(
       screen.queryByRole("button", { name: "Skip introduction" }),
     ).toBeNull();
     expect(document.activeElement?.id).toBe("auth-heading");
     first.unmount();
     reduced = false;
-    const second = render(<MobileAuthExperience onInfo={() => {}} />);
+    const second = render(<MobileAuthExperience {...experienceProps} />);
     expect(second.container.querySelector(".journey")).toBeTruthy();
     act(() => {
       reduced = true;
       [...listeners].forEach((cb) => cb());
     });
-    expect(second.container.querySelector(".journey")).toBeNull();
+    expect(
+      second.container
+        .querySelector("[data-stage]")
+        ?.getAttribute("data-stage"),
+    ).toBe("auth");
     expect(document.activeElement?.id).toBe("auth-heading");
     act(() => {
       reduced = false;
       [...listeners].forEach((cb) => cb());
     });
-    expect(second.container.querySelector(".journey")).toBeNull();
+    expect(
+      second.container
+        .querySelector("[data-stage]")
+        ?.getAttribute("data-stage"),
+    ).toBe("auth");
   });
 
   it("validates login, simulates success, and cancels pending form timers on tab change", () => {
     vi.useFakeTimers();
     reduced = true;
-    render(<MobileAuthExperience onInfo={() => {}} />);
+    render(<MobileAuthExperience {...experienceProps} />);
     fireEvent.click(screen.getByRole("tab", { name: "Log In" }));
     fireEvent.click(screen.getByRole("button", { name: "Log in" }));
     expect(screen.getByText("Enter your password.")).toBeTruthy();
@@ -131,7 +151,7 @@ describe("mobile authentication lifecycle", () => {
 
   it("cleans up media subscriptions and the illustration animation frame on unmount", () => {
     const cancel = vi.spyOn(window, "cancelAnimationFrame");
-    const { unmount } = render(<MobileAuthExperience onInfo={() => {}} />);
+    const { unmount } = render(<MobileAuthExperience {...experienceProps} />);
     unmount();
     expect(listeners.size).toBe(0);
     expect(cancel).toHaveBeenCalled();

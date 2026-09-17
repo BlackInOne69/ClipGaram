@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="990" height="265" viewBox="90 80 990 265" role="img" aria-labelledby="title desc">
+  <title id="title">ClipGaram primary transparent logo</title>
+  <desc id="desc">ClipGaram soft G symbol, wordmark, and tagline for light website backgrounds.</desc>
+  <g transform="translate(62 43) scale(.66)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M374 151C337 107 284 84 226 87C137 91 72 159 72 247C72 338 142 401 232 398C291 396 340 371 374 333"
+          stroke="#203A35" stroke-width="48"/>
+    <path d="M287 281H375V333C375 390 335 424 272 426C223 428 181 414 151 386"
+          stroke="#D7653D" stroke-width="38"/>
+  </g>
+  <g transform="translate(410 0)">
+    <text x="0" y="223" font-family="Georgia, 'Times New Roman', serif" font-size="126" font-weight="700" letter-spacing="-6" fill="#203A35">clip</text>
+    <text x="231" y="223" font-family="Georgia, 'Times New Roman', serif" font-size="126" font-weight="700" font-style="italic" letter-spacing="-5" fill="#D7653D">garam</text>
+    <text x="6" y="291" font-family="Inter, Manrope, Arial, sans-serif" font-size="23" font-weight="600" letter-spacing="8" fill="#64736E">CLIP. POST. EARN.</text>
+  </g>
+</svg>
