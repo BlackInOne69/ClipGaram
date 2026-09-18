@@ -1241,17 +1241,35 @@ td {
     min-height: 0;
   }
   .performance-card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
   }
   .performance-chart-wrap {
     min-height: 0;
+    display: grid;
+    place-items: center;
   }
   .performance-chart {
-    height: clamp(8.75rem, 18dvh, 11.25rem);
+    height: 100%;
+    max-height: 11.25rem;
   }
   .status-bars {
-    margin-top: auto;
+    margin-top: 0;
+  }
+  .insights-column {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+  .verification-card {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    align-items: center;
+    row-gap: 0.25rem;
+  }
+  .verification-card .dial-layout {
+    min-height: 0;
+  }
+  .verification-card .verification-summary {
+    margin-block: 0;
   }
 }
 
@@ -1301,7 +1319,8 @@ td {
     margin-top: 0.35rem;
   }
   .performance-chart {
-    height: clamp(7.75rem, 18dvh, 9.75rem);
+    height: 100%;
+    max-height: 9.75rem;
   }
   .status-bars {
     padding-top: 0.55rem;
@@ -1367,11 +1386,9 @@ td {
   .verification-card {
     padding-block: 0.5rem;
   }
-  .insights-column {
-    grid-template-rows: minmax(0, 0.9fr) minmax(0, 1.15fr);
-  }
   .performance-chart {
-    height: clamp(7rem, 17dvh, 8.25rem);
+    height: 100%;
+    max-height: 9rem;
   }
   .status-bars {
     padding-top: 0.4rem;
@@ -1384,14 +1401,17 @@ td {
     margin-top: 0.35rem;
   }
   .dial-layout {
-    height: 5.5rem;
+    height: 5.2rem;
   }
   .verification-dial {
-    width: 8.5rem;
+    width: 7.25rem;
   }
   .verification-summary {
     margin-top: 0.1rem;
     margin-bottom: 0.1rem;
+  }
+  .verification-card {
+    padding-block: 0.35rem;
   }
   .details-button {
     min-height: 1.5rem;
@@ -1403,7 +1423,11 @@ td {
     padding-block: 0.2rem;
   }
   .recent-card td {
-    padding-block: 0.15rem;
+    padding-block: 0.05rem;
+  }
+  .recent-card .icon-button {
+    min-width: 2rem;
+    min-height: 2rem;
   }
   .recent-card .clip-thumbnail {
     width: 3.75rem;
