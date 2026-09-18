@@ -45,6 +45,7 @@ export function SignupPage() {
         onThemeChange={setTheme}
         initialTab={initialTab}
         initialRole={initialRole}
+        onSuccess={() => window.location.assign("/dashboard")}
       />
       <dialog ref={dialog} className="info-dialog" aria-labelledby="info-title">
         <button

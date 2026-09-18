@@ -9,6 +9,23 @@
       content="Join ClipGaram. Create. Clip. Earn. Be part of Nepal’s creator economy."
     />
     <title>Join ClipGaram</title>
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem("clipgaram-theme");
+          const theme =
+            saved === "light" || saved === "dark"
+              ? saved
+              : matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.dataset.theme = theme;
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute("content", theme === "dark" ? "#101815" : "#f4f0e8");
+        } catch {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

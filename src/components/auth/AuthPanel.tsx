@@ -9,11 +9,13 @@ export function AuthPanel({
   active = true,
   initialTab = "signup",
   initialRole = "Clipper",
+  onSuccess,
 }: {
   onInfo: (title: string) => void;
   active?: boolean;
   initialTab?: AuthTab;
   initialRole?: AccountType;
+  onSuccess?: (role: AccountType, mode: "signup" | "login") => void;
 }) {
   const [tab, setTab] = useState<AuthTab>(initialTab);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -50,9 +52,14 @@ export function AuthPanel({
             initialRole={initialRole}
             onInfo={onInfo}
             onSwitch={() => setTab("login")}
+            onSuccess={onSuccess}
           />
         ) : (
-          <LoginForm onInfo={onInfo} onSignup={() => setTab("signup")} />
+          <LoginForm
+            onInfo={onInfo}
+            onSignup={() => setTab("signup")}
+            onSuccess={onSuccess}
+          />
         )}
       </div>
     </section>

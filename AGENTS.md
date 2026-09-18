@@ -21,3 +21,11 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 ## Master 2 landing page
 
 The root route is the responsive Master 2 marketing page. Keep `/signup`, `/login`, and `/auth` on the shared authentication shell; landing-page role CTAs pass `role=Clipper` or `role=Creator` into that shell. Build the landing artwork as reusable inline SVG components, and reveal section motion once with IntersectionObserver while immediately showing final states for reduced-motion users.
+
+## Clipper dashboard
+
+Use `/dashboard` and `/clipper/dashboard` for the authenticated Clipper dashboard. Successful local Clipper authentication routes to `/dashboard`. Keep the dashboard on the shared light/dark theme system with one sidebar profile, no role switch, and no Active campaign card. Preserve the attached dashboard light/dark references as the source of truth, keep mock dashboard data separate from chart and page components, and retain internal mobile table reflow so the document never scrolls horizontally.
+
+At the dashboard mobile breakpoint, hide the desktop sidebar and search bar. Use the full ClipGaram wordmark, notification control, and one profile-avatar menu in the top bar. Keep Dashboard, Campaigns, My clips, Earnings, and More in a fixed safe-area-aware bottom navigation; More exposes the remaining sidebar destinations. Preserve the single-column content order from metrics through Recent clips and reserve enough bottom padding that the navigation never covers content.
+
+At desktop widths from 1024px, keep the dashboard shell within `100dvh` with no page scrolling. Lay out the main content as heading, metrics, flexible analytics, and Recent clips grid rows. Use height-aware spacing, chart, card, and table density so common 768px through 1440px viewport heights retain every section and the sidebar profile without overlap. These height rules must never apply below the desktop breakpoint.

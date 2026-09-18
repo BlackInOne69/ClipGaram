@@ -15,12 +15,14 @@ export function SignupForm({
   mode = "signup",
   onSwitch,
   initialRole = "Clipper",
+  onSuccess,
 }: {
   onInfo: (title: string) => void;
   panel?: boolean;
   mode?: "signup" | "login";
   onSwitch?: () => void;
   initialRole?: AccountType;
+  onSuccess?: (role: AccountType, mode: "signup" | "login") => void;
 }) {
   const login = mode === "login";
   const [role, setRole] = useState<AccountType>(initialRole);
@@ -46,6 +48,7 @@ export function SignupForm({
       setLoading(null);
       setSuccess(true);
       setPassword("");
+      if (login || role === "Clipper") onSuccess?.(role, mode);
     }, 1200);
   }
   function submit(event: FormEvent<HTMLFormElement>) {

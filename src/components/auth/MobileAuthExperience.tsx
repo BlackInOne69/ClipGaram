@@ -16,12 +16,14 @@ export function MobileAuthExperience({
   onThemeChange,
   initialTab,
   initialRole,
+  onSuccess,
 }: {
   onInfo: (title: string) => void;
   theme: ClipGaramThemeName;
   onThemeChange: (theme: ClipGaramThemeName) => void;
   initialTab?: AuthTab;
   initialRole?: AccountType;
+  onSuccess?: (role: AccountType, mode: "signup" | "login") => void;
 }) {
   const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const [stage, setStage] = useState<Stage>(() =>
@@ -55,6 +57,7 @@ export function MobileAuthExperience({
             active={showAuth}
             initialTab={initialTab}
             initialRole={initialRole}
+            onSuccess={onSuccess}
           />
         </div>
       </section>

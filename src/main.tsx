@@ -10,11 +10,23 @@ import "./styles/clipgaram-tokens.css";
 import "./styles/signup.css";
 import { SignupPage } from "./pages/SignupPage";
 import { LandingPage } from "./pages/LandingPage";
+import { DashboardPage } from "./pages/DashboardPage";
 
 const authRoute = ["/signup", "/login", "/auth"].includes(
   window.location.pathname,
 );
+const dashboardRoute = ["/dashboard", "/clipper/dashboard"].includes(
+  window.location.pathname,
+);
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>{authRoute ? <SignupPage /> : <LandingPage />}</StrictMode>,
+  <StrictMode>
+    {dashboardRoute ? (
+      <DashboardPage />
+    ) : authRoute ? (
+      <SignupPage />
+    ) : (
+      <LandingPage />
+    )}
+  </StrictMode>,
 );

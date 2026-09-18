@@ -1,0 +1,63 @@
+export const performanceData = [
+  { day: "1 Sep", views: 2200, earnings: 900 },
+  { day: "2 Sep", views: 3200, earnings: 1400 },
+  { day: "3 Sep", views: 5100, earnings: 1100 },
+  { day: "4 Sep", views: 6400, earnings: 2300 },
+  { day: "5 Sep", views: 4600, earnings: 1300 },
+  { day: "6 Sep", views: 7400, earnings: 2500 },
+  { day: "7 Sep", views: 8600, earnings: 1700 },
+  { day: "8 Sep", views: 9700, earnings: 3000 },
+  { day: "9 Sep", views: 6600, earnings: 2100 },
+  { day: "10 Sep", views: 7700, earnings: 4100 },
+  { day: "11 Sep", views: 5600, earnings: 3000 },
+  { day: "12 Sep", views: 7900, earnings: 4300 },
+  { day: "13 Sep", views: 6500, earnings: 2800 },
+  { day: "14 Sep", views: 8420, earnings: 3600 },
+  { day: "15 Sep", views: 9100, earnings: 3500 },
+  { day: "16 Sep", views: 11200, earnings: 5900 },
+  { day: "17 Sep", views: 10100, earnings: 5000 },
+  { day: "18 Sep", views: 12800, earnings: 7600 },
+] as const;
+
+export const bestDays = [
+  { day: "Sun", value: "8.2K", height: 35 },
+  { day: "Mon", value: "6.1K", height: 24 },
+  { day: "Tue", value: "10.4K", height: 49 },
+  { day: "Wed", value: "12.6K", height: 63 },
+  { day: "Thu", value: "9.8K", height: 42 },
+  { day: "Fri", value: "14.2K", height: 72 },
+  { day: "Sat", value: "18.2K", height: 100, best: true },
+] as const;
+
+export const recentClips = [
+  {
+    title: "Momo magic in Kathmandu",
+    date: "Sep 14, 2026",
+    campaign: "Local Flavors of Nepal",
+    status: "Paid",
+    views: "12,480",
+    earnings: "NPR 150",
+    duration: "0:31",
+    thumbnail: "food",
+  },
+  {
+    title: "Morning stretch for a better you",
+    date: "Sep 11, 2026",
+    campaign: "Move Better Everyday",
+    status: "Verifying",
+    views: "8,320",
+    earnings: "NPR 101",
+    duration: "0:28",
+    thumbnail: "fitness",
+  },
+  {
+    title: "A brighter future together",
+    date: "Sep 8, 2026",
+    campaign: "Smarter Together",
+    status: "Submitted",
+    views: "4,960",
+    earnings: "NPR 62",
+    duration: "0:45",
+    thumbnail: "education",
+  },
+] as const;

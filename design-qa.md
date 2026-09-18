@@ -39,3 +39,36 @@ Final result: passed. No remaining P0/P1/P2 findings.
 ## Coverage limits
 
 - Chromium-based in-app browser coverage only; physical iOS/Android and screen-reader sessions were not available.
+
+# ClipGaram Clipper Dashboard design QA
+
+## Result
+
+Final result: passed. No remaining P0/P1/P2 findings.
+
+## Source and implementation
+
+- Visual references: `src/assets/dashboard light.png` and `src/assets/dashboard dark.png`, both at 1440 × 1024.
+- The implementation uses the existing cropped ClipGaram wordmark, Fraunces headings, Inter interface text, Phosphor outline icons, shared theme state, and semantic CSS variables.
+- The dashboard is available at `/dashboard` and `/clipper/dashboard`. Successful local Clipper authentication routes to `/dashboard`.
+- Dashboard data lives separately from the responsive SVG charts and page presentation.
+
+## Browser evidence
+
+- Compared the full desktop composition against both locked references at 1440 × 1024 in light and dark themes.
+- Verified the layout at 390, 768, 1024, and 1440 widths. The document did not scroll horizontally; the recent-clips table becomes readable stacked rows on narrow screens.
+- Verified the mobile navigation drawer, search filtering, notification popover, date/period controls, performance metric switch, recent-clip menu, theme toggle, and mock feedback toast.
+- Dark theme persisted across a full page reload, and the early head script applied the saved theme before React rendered.
+- Confirmed one profile block, no role switch, no Active campaign card, a full-width Recent clips section, and no browser console warnings or errors.
+
+## Automated checks
+
+- Prettier formatting: passed.
+- TypeScript: passed.
+- Mobile authentication regression suite: 5/5 passed.
+- Production Vite/Sites build: passed.
+- Sites worker/package checks: 4/4 passed.
+
+## Coverage limits
+
+- Browser verification used the Chromium-based in-app browser; physical-device and screen-reader sessions were not available.
