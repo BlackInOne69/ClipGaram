@@ -13,10 +13,12 @@ function initialTheme(): ClipGaramThemeName {
   return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-export function DashboardPage() {
+export function DashboardPage({ children }: { children?: React.ReactNode }) {
   const [theme, setTheme] = useState<ClipGaramThemeName>(initialTheme);
   useEffect(() => {
-    document.title = "Clipper Dashboard — ClipGaram";
+    document.title = children
+      ? "Campaigns — ClipGaram"
+      : "Clipper Dashboard — ClipGaram";
     document.documentElement.dataset.theme = theme;
     document
       .querySelector('meta[name="theme-color"]')
@@ -26,6 +28,10 @@ export function DashboardPage() {
     } catch {
       /* theme remains active */
     }
-  }, [theme]);
-  return <DashboardPageContent theme={theme} onThemeChange={setTheme} />;
+  }, [theme, children]);
+  return (
+    <DashboardPageContent theme={theme} onThemeChange={setTheme}>
+      {children}
+    </DashboardPageContent>
+  );
 }

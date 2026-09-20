@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "@fontsource/fraunces/600.css";
 import "@fontsource/fraunces/700.css";
@@ -11,6 +11,12 @@ import "./styles/signup.css";
 import { SignupPage } from "./pages/SignupPage";
 import { LandingPage } from "./pages/LandingPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import "./styles/campaigns.css";
+
+const CampaignsPage = lazy(() => import("./pages/CampaignsPage"));
+const campaignRoute = /^\/(?:clipper\/)?campaigns(?:\/[^/]+)?\/?$/.test(
+  window.location.pathname,
+);
 
 const authRoute = ["/signup", "/login", "/auth"].includes(
   window.location.pathname,
@@ -21,7 +27,19 @@ const dashboardRoute = ["/dashboard", "/clipper/dashboard"].includes(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {dashboardRoute ? (
+    {campaignRoute ? (
+      <DashboardPage>
+        <Suspense
+          fallback={
+            <main className="campaigns-main" role="status">
+              Loading campaigns…
+            </main>
+          }
+        >
+          <CampaignsPage />
+        </Suspense>
+      </DashboardPage>
+    ) : dashboardRoute ? (
       <DashboardPage />
     ) : authRoute ? (
       <SignupPage />

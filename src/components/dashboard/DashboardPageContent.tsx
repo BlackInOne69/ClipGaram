@@ -64,11 +64,13 @@ function Toast({ message, onClose }: { message: string; onClose: () => void }) {
 export function DashboardPageContent({
   theme,
   onThemeChange,
+  children,
 }: {
   theme: ClipGaramThemeName;
   onThemeChange: (theme: ClipGaramThemeName) => void;
+  children?: React.ReactNode;
 }) {
-  const [active, setActive] = useState("Dashboard");
+  const active = children ? "Discover campaigns" : "Dashboard";
   const [metric, setMetric] = useState<"views" | "earnings">("views");
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState("");
@@ -93,14 +95,13 @@ export function DashboardPageContent({
     window.setTimeout(() => setToast(""), 2600);
   };
   const selectDestination = (label: string) => {
-    setActive(label);
     setMoreOpen(false);
-    label === "Discover campaigns"
-      ? window.location.assign("/#campaigns")
-      : notify(`${label} selected`);
+    if (label === "Discover campaigns") window.location.assign("/campaigns");
+    else if (label === "Dashboard") window.location.assign("/dashboard");
+    else notify(`${label} selected`);
   };
   return (
-    <div className="dashboard-app">
+    <div className={`dashboard-app${children ? " campaigns-app" : ""}`}>
       <aside className="dashboard-sidebar">
         <div className="sidebar-brand">
           <a href="/" aria-label="ClipGaram home">
@@ -112,6 +113,7 @@ export function DashboardPageContent({
             <button
               key={label}
               className={active === label ? "is-active" : ""}
+              aria-current={active === label ? "page" : undefined}
               onClick={() => selectDestination(label)}
             >
               <Icon size={25} />
@@ -164,6 +166,7 @@ export function DashboardPageContent({
           <label className="dashboard-search">
             <MagnifyingGlass size={22} />
             <input
+              aria-label="Search campaigns, clips, creators"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search campaigns, clips, creators..."
@@ -225,231 +228,235 @@ export function DashboardPageContent({
             </div>
           </div>
         </header>
-        <main className="dashboard-main">
-          <header className="dashboard-heading">
-            <h1>Dashboard</h1>
-            <div className="dashboard-controls">
-              <div className="popover-anchor">
-                <button
-                  className="control-button"
-                  onClick={() => setDateOpen(!dateOpen)}
-                  aria-expanded={dateOpen}
-                >
-                  <CalendarBlank size={19} />
-                  Sep 1–18, 2026
-                </button>
-                {dateOpen && (
-                  <div className="dashboard-popover">
-                    <strong>Reporting range</strong>
-                    <span>September 1–18, 2026</span>
-                  </div>
-                )}
+        {children ?? (
+          <main className="dashboard-main">
+            <header className="dashboard-heading">
+              <h1>Dashboard</h1>
+              <div className="dashboard-controls">
+                <div className="popover-anchor">
+                  <button
+                    className="control-button"
+                    onClick={() => setDateOpen(!dateOpen)}
+                    aria-expanded={dateOpen}
+                  >
+                    <CalendarBlank size={19} />
+                    Sep 1–18, 2026
+                  </button>
+                  {dateOpen && (
+                    <div className="dashboard-popover">
+                      <strong>Reporting range</strong>
+                      <span>September 1–18, 2026</span>
+                    </div>
+                  )}
+                </div>
+                <div className="popover-anchor">
+                  <button
+                    className="control-button"
+                    onClick={() => setPeriodOpen(!periodOpen)}
+                    aria-expanded={periodOpen}
+                  >
+                    {period}
+                    <CaretDown size={16} />
+                  </button>
+                  {periodOpen && (
+                    <div className="dashboard-popover period-menu">
+                      {["Last 7 days", "Last 18 days", "Last 30 days"].map(
+                        (option) => (
+                          <button
+                            key={option}
+                            onClick={() => {
+                              setPeriod(option);
+                              setPeriodOpen(false);
+                            }}
+                          >
+                            {option}
+                          </button>
+                        ),
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="popover-anchor">
-                <button
-                  className="control-button"
-                  onClick={() => setPeriodOpen(!periodOpen)}
-                  aria-expanded={periodOpen}
-                >
-                  {period}
-                  <CaretDown size={16} />
-                </button>
-                {periodOpen && (
-                  <div className="dashboard-popover period-menu">
-                    {["Last 7 days", "Last 18 days", "Last 30 days"].map(
-                      (option) => (
-                        <button
-                          key={option}
-                          onClick={() => {
-                            setPeriod(option);
-                            setPeriodOpen(false);
-                          }}
-                        >
-                          {option}
-                        </button>
-                      ),
-                    )}
+            </header>
+            <section className="metric-grid" aria-label="Clipper summary">
+              <MetricCard
+                icon={<Eye />}
+                label="Verified views"
+                value="69,500"
+                badge="↑ 18.4%"
+                note="vs. previous period"
+              />
+              <MetricCard
+                icon={<FilmStrip />}
+                label="Clips submitted"
+                value="12"
+                badge="↑ +2"
+                note="this period"
+              />
+              <MetricCard
+                icon={<Wallet />}
+                label="Available earnings"
+                value="NPR 1,250"
+                badge="↑ +NPR 430"
+                note="vs. previous period"
+              />
+              <MetricCard
+                icon={<ClockCountdown />}
+                label="Pending review"
+                value="NPR 640"
+                note="3 clips"
+              />
+            </section>
+            <div className="dashboard-grid">
+              <section
+                className="dashboard-card performance-card"
+                aria-labelledby="performance-title"
+              >
+                <header className="performance-heading">
+                  <div>
+                    <h2 id="performance-title">Performance</h2>
+                    <p>Your clip performance over time</p>
                   </div>
-                )}
+                  <div
+                    className="metric-tabs"
+                    role="group"
+                    aria-label="Performance metric"
+                  >
+                    <button
+                      className={metric === "views" ? "is-active" : ""}
+                      onClick={() => setMetric("views")}
+                    >
+                      Verified views
+                    </button>
+                    <button
+                      className={metric === "earnings" ? "is-active" : ""}
+                      onClick={() => setMetric("earnings")}
+                    >
+                      Earnings
+                    </button>
+                  </div>
+                </header>
+                <PerformanceChart metric={metric} />
+                <div className="status-bars">
+                  <h3>Clips by status</h3>
+                  {[
+                    ["Paid", 6, 60],
+                    ["Verifying", 3, 40],
+                    ["Submitted", 3, 40],
+                  ].map(([label, count, width]) => (
+                    <div className="status-row" key={label}>
+                      <span>{label}</span>
+                      <div>
+                        <i
+                          className={label === "Verifying" ? "is-clay" : ""}
+                          style={{ width: `${width}%` }}
+                        />
+                      </div>
+                      <strong>{count}</strong>
+                    </div>
+                  ))}
+                </div>
+              </section>
+              <div className="insights-column">
+                <BestDayChart
+                  onMenu={() => notify("Best-day options opened.")}
+                />
+                <VerificationDial
+                  onMenu={() => notify("Verification options opened.")}
+                  onDetails={() => notify("10 of 12 clips have been verified.")}
+                />
               </div>
             </div>
-          </header>
-          <section className="metric-grid" aria-label="Clipper summary">
-            <MetricCard
-              icon={<Eye />}
-              label="Verified views"
-              value="69,500"
-              badge="↑ 18.4%"
-              note="vs. previous period"
-            />
-            <MetricCard
-              icon={<FilmStrip />}
-              label="Clips submitted"
-              value="12"
-              badge="↑ +2"
-              note="this period"
-            />
-            <MetricCard
-              icon={<Wallet />}
-              label="Available earnings"
-              value="NPR 1,250"
-              badge="↑ +NPR 430"
-              note="vs. previous period"
-            />
-            <MetricCard
-              icon={<ClockCountdown />}
-              label="Pending review"
-              value="NPR 640"
-              note="3 clips"
-            />
-          </section>
-          <div className="dashboard-grid">
             <section
-              className="dashboard-card performance-card"
-              aria-labelledby="performance-title"
+              className="dashboard-card recent-card"
+              aria-labelledby="recent-title"
             >
-              <header className="performance-heading">
-                <div>
-                  <h2 id="performance-title">Performance</h2>
-                  <p>Your clip performance over time</p>
-                </div>
-                <div
-                  className="metric-tabs"
-                  role="group"
-                  aria-label="Performance metric"
+              <header className="card-heading-row">
+                <h2 id="recent-title">Recent clips</h2>
+                <button
+                  className="icon-button"
+                  aria-label="Recent clips options"
+                  onClick={() => notify("Recent clip options opened.")}
                 >
-                  <button
-                    className={metric === "views" ? "is-active" : ""}
-                    onClick={() => setMetric("views")}
-                  >
-                    Verified views
-                  </button>
-                  <button
-                    className={metric === "earnings" ? "is-active" : ""}
-                    onClick={() => setMetric("earnings")}
-                  >
-                    Earnings
-                  </button>
-                </div>
+                  <DotsThree size={23} weight="bold" />
+                </button>
               </header>
-              <PerformanceChart metric={metric} />
-              <div className="status-bars">
-                <h3>Clips by status</h3>
-                {[
-                  ["Paid", 6, 60],
-                  ["Verifying", 3, 40],
-                  ["Submitted", 3, 40],
-                ].map(([label, count, width]) => (
-                  <div className="status-row" key={label}>
-                    <span>{label}</span>
-                    <div>
-                      <i
-                        className={label === "Verifying" ? "is-clay" : ""}
-                        style={{ width: `${width}%` }}
-                      />
-                    </div>
-                    <strong>{count}</strong>
-                  </div>
-                ))}
+              <div className="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Clip</th>
+                      <th>Campaign</th>
+                      <th>Status</th>
+                      <th>Verified views</th>
+                      <th>Earnings</th>
+                      <th>
+                        <span className="sr-only">Actions</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filtered.map((clip, index) => (
+                      <tr key={clip.title}>
+                        <td>
+                          <div className="clip-cell">
+                            <div
+                              className={`clip-thumbnail thumb-${clip.thumbnail}`}
+                            >
+                              <VideoCamera size={20} />
+                              <span>{clip.duration}</span>
+                            </div>
+                            <div>
+                              <strong>{clip.title}</strong>
+                              <small>{clip.date}</small>
+                            </div>
+                          </div>
+                        </td>
+                        <td>{clip.campaign}</td>
+                        <td>
+                          <span
+                            className={`status-badge status-${clip.status.toLowerCase()}`}
+                          >
+                            {clip.status}
+                          </span>
+                        </td>
+                        <td>{clip.views}</td>
+                        <td>{clip.earnings}</td>
+                        <td className="row-actions">
+                          <button
+                            aria-label={`Actions for ${clip.title}`}
+                            onClick={() =>
+                              setRowMenu(rowMenu === index ? null : index)
+                            }
+                          >
+                            <DotsThree size={20} weight="bold" />
+                          </button>
+                          {rowMenu === index && (
+                            <div className="dashboard-popover row-menu">
+                              <button
+                                onClick={() => notify(`Opening ${clip.title}`)}
+                              >
+                                View clip
+                              </button>
+                              <button
+                                onClick={() => notify("Share link copied.")}
+                              >
+                                Copy share link
+                              </button>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {filtered.length === 0 && (
+                  <p className="empty-table">No clips match “{search}”.</p>
+                )}
               </div>
             </section>
-            <div className="insights-column">
-              <BestDayChart onMenu={() => notify("Best-day options opened.")} />
-              <VerificationDial
-                onMenu={() => notify("Verification options opened.")}
-                onDetails={() => notify("10 of 12 clips have been verified.")}
-              />
-            </div>
-          </div>
-          <section
-            className="dashboard-card recent-card"
-            aria-labelledby="recent-title"
-          >
-            <header className="card-heading-row">
-              <h2 id="recent-title">Recent clips</h2>
-              <button
-                className="icon-button"
-                aria-label="Recent clips options"
-                onClick={() => notify("Recent clip options opened.")}
-              >
-                <DotsThree size={23} weight="bold" />
-              </button>
-            </header>
-            <div className="table-scroll">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Clip</th>
-                    <th>Campaign</th>
-                    <th>Status</th>
-                    <th>Verified views</th>
-                    <th>Earnings</th>
-                    <th>
-                      <span className="sr-only">Actions</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((clip, index) => (
-                    <tr key={clip.title}>
-                      <td>
-                        <div className="clip-cell">
-                          <div
-                            className={`clip-thumbnail thumb-${clip.thumbnail}`}
-                          >
-                            <VideoCamera size={20} />
-                            <span>{clip.duration}</span>
-                          </div>
-                          <div>
-                            <strong>{clip.title}</strong>
-                            <small>{clip.date}</small>
-                          </div>
-                        </div>
-                      </td>
-                      <td>{clip.campaign}</td>
-                      <td>
-                        <span
-                          className={`status-badge status-${clip.status.toLowerCase()}`}
-                        >
-                          {clip.status}
-                        </span>
-                      </td>
-                      <td>{clip.views}</td>
-                      <td>{clip.earnings}</td>
-                      <td className="row-actions">
-                        <button
-                          aria-label={`Actions for ${clip.title}`}
-                          onClick={() =>
-                            setRowMenu(rowMenu === index ? null : index)
-                          }
-                        >
-                          <DotsThree size={20} weight="bold" />
-                        </button>
-                        {rowMenu === index && (
-                          <div className="dashboard-popover row-menu">
-                            <button
-                              onClick={() => notify(`Opening ${clip.title}`)}
-                            >
-                              View clip
-                            </button>
-                            <button
-                              onClick={() => notify("Share link copied.")}
-                            >
-                              Copy share link
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {filtered.length === 0 && (
-                <p className="empty-table">No clips match “{search}”.</p>
-              )}
-            </div>
-          </section>
-        </main>
+          </main>
+        )}
       </div>
       <nav
         className="mobile-bottom-nav"
@@ -463,6 +470,7 @@ export function DashboardPageContent({
               key={label}
               type="button"
               className={active === destination ? "is-active" : ""}
+              aria-current={active === destination ? "page" : undefined}
               onClick={() => selectDestination(destination)}
             >
               <Icon size={23} />
